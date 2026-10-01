@@ -1,0 +1,10 @@
+import assert from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
+const built = await readFile('dist/index.html', 'utf8');
+const published = await readFile('docs/index.html', 'utf8');
+assert.equal(built, published, 'Published app must match clean build');
+assert(built.includes('Content-Security-Policy'));
+assert(!/<script[^>]+src=/i.test(built));
+assert(built.includes('Permission to use, copy, modify, and/or distribute this software'));
+assert(built.includes('Copyright Eemeli Aro'));
+console.log('Standalone artifact matches published bytes.');

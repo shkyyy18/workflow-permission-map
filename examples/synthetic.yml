@@ -1,0 +1,25 @@
+name: Synthetic permission example
+on: [push, pull_request]
+permissions:
+  contents: read
+  issues: write
+jobs:
+  inherited:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Synthetic example only"
+  publish:
+    permissions:
+      packages: write
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "No package is published"
+  locked:
+    permissions: {}
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "No declared scope access"
+  reusable:
+    permissions:
+      contents: read
+    uses: example-org/example-repository/.github/workflows/build.yml@main
