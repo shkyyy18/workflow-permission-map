@@ -1,9 +1,35 @@
 # Workflow Permission Map（v0.1.0 alpha）
 
-在离线浏览器里逐格解释 GitHub Actions **声明的权限来源**，不是安全扫描器，
-也不是实际运行时 token 权限计算器。尚无独立用户验证；公开 alpha 不等于生产可用。
+工作流写了 `contents: read`，为什么某个 job 却声明为 `none`？
+逐格查看 GitHub Actions 权限的声明来源和 YAML 行号。
 
-## 运行
+**[直接试用](https://shkyyy18.github.io/workflow-permission-map/)** |
+**[下载离线 HTML](https://github.com/shkyyy18/workflow-permission-map/releases/tag/v0.1.0)** |
+[English](README.md)
+
+合成示例无需安装、账号或 token。检查自己的工作流时，先下载 `index.html`，
+用同一 Release 的 `SHA256SUMS.txt` 核对 SHA-256，再离线打开。
+应用不上传输入、不执行工作流。它解释的是**声明配置**，不是实际运行时 token 权限，也不是安全扫描器。
+
+![合成工作流：publish 仅声明 packages write；contents 和 issues 为 none。点击格子可查看声明行号。](docs/preview.png)
+
+## 30 秒看懂一个容易误读的规则
+
+1. 打开在线演示，默认是明确标注的四个 job 合成工作流。
+2. 找到 `publish / contents`：工作流写了 `contents: read`，这里却是 `none`。
+3. 点击该格子，解释指向 `jobs.publish.permissions`，第 12 行。
+
+原因是 job 的权限表**替换**工作流权限表，而不是逐项合并。
+只写 `packages: write` 时，表里未列出的权限就是 `none`。
+[可复现例子](docs/permission-replacement.md)展示了显式补上 `contents: read` 后的声明差异；
+实际运行权限仍受其他条件影响，不可从这个表推断安全结论。
+
+## 反馈
+
+行号解释是否帮助你审查权限变化？可以在 Issue 里描述看不懂的结果，必要时附最小**合成** YAML。
+不要贴真实工作流、凭据或私人标识。尚无独立用户验证；公开 alpha 不等于生产可用。
+
+## 从源码构建
 
 构建需要 Node.js 22+；构建完成后只需要现代浏览器。
 
@@ -49,8 +75,3 @@ Actions Permission Diff Ledger 已提供权限与信任边界的前后差异 CLI
 
 英文 README 包含完整边界与原始参考链接。代码 MIT；依赖许可见 THIRD_PARTY_NOTICES.txt。
 
-## Download / 在线合成演示
-
-[Open browser app](https://shkyyy18.github.io/workflow-permission-map/) · [Download standalone index.html](https://github.com/shkyyy18/workflow-permission-map/releases/tag/v0.1.0)
-
-Download `index.html` and open it offline for your own workflows. The app requires no upload. Compare its SHA-256 with `SHA256SUMS.txt` from the same release.

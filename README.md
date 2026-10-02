@@ -1,9 +1,38 @@
 # Workflow Permission Map — v0.1.0 alpha
 
-Explain **declared** GitHub Actions permissions in an offline browser, cell by cell.
-This is not a security scanner, a workflow validator, or a model of the actual runtime token.
+See why a GitHub Actions job declares `contents: none` even when the workflow
+declares `contents: read`. Inspect each cell's declaration and source line.
 
-## Try locally
+**[Try the browser app](https://shkyyy18.github.io/workflow-permission-map/)** |
+**[Download the offline HTML](https://github.com/shkyyy18/workflow-permission-map/releases/tag/v0.1.0)** |
+[中文](README.zh-CN.md)
+
+No install or account needed to try the synthetic example. For your own workflow,
+download `index.html`, compare its SHA-256 with the release's `SHA256SUMS.txt`, and
+open it offline. The app does not upload input or execute workflows.
+It explains **declared configuration**, not actual runtime token authority or security.
+
+![Synthetic workflow: publish declares packages write, but contents and issues none; clicking contents shows the source line.](docs/preview.png)
+
+## One permission trap, in 30 seconds
+
+1. Open the browser app; it starts with a **synthetic** four-job workflow.
+2. Find `publish / contents`: it is `none`, although the workflow says `contents: read`.
+3. Click that cell: the explanation points to `jobs.publish.permissions`, line 12.
+
+The job declares only `packages: write`. Its permission map **replaces**, rather than
+merges with, the workflow map. Unlisted scopes in that map become `none`.
+[Read the reproducible example](docs/permission-replacement.md), including an explicit
+`contents: read` declaration and what still cannot be inferred at runtime.
+
+## Feedback
+
+Does the source-line explanation help you review a permission change? Open an issue
+with the confusing behavior and, if needed, a minimal **synthetic** YAML example.
+Do not post real workflows, credentials or private identifiers. No independent user
+validation has been obtained; this is an experimental alpha, not a production security product.
+
+## Build from source
 
 Requires Node.js 22+ for building; the generated file needs only a modern browser.
 
@@ -78,11 +107,5 @@ These are documentation references, not runtime dependencies. See `README.zh-CN.
 never HTML derived from user input. `npm run build` embeds the YAML parser into one HTML.
 A restrictive CSP disables connections. Unit tests run with Node's built-in test runner.
 See `THIRD_PARTY_NOTICES.txt` for bundled dependencies. MIT license.
-
-## Download / 在线合成演示
-
-[Open browser app](https://shkyyy18.github.io/workflow-permission-map/) · [Download standalone index.html](https://github.com/shkyyy18/workflow-permission-map/releases/tag/v0.1.0)
-
-Download `index.html` and open it offline for your own workflows. The app requires no upload. Compare its SHA-256 with `SHA256SUMS.txt` from the same release.
 
 Build inputs and the published standalone file use LF line endings for reproducible Windows/Linux builds.
