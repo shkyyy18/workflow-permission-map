@@ -27,8 +27,11 @@ merges with, the workflow map. Unlisted scopes in that map become `none`.
 
 ## Feedback
 
-Does the source-line explanation help you review a permission change? Open an issue
-with the confusing behavior and, if needed, a minimal **synthetic** YAML example.
+Does the source-line explanation help you review a permission change?
+[Share one first-use observation](https://github.com/shkyyy18/workflow-permission-map/issues/new?template=first-use.yml):
+what you tried, which step was clear or confusing, and whether existing tools are sufficient.
+A short observation is enough; YAML is optional and must be newly written and **synthetic**.
+The demo needs no account; submitting a public GitHub issue requires a GitHub account.
 Do not post real workflows, credentials or private identifiers. No independent user
 validation has been obtained; this is an experimental alpha, not a production security product.
 

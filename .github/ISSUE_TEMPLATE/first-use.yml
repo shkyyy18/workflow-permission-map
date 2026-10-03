@@ -1,0 +1,57 @@
+name: First-use feedback
+description: Share one confusing result or a useful explanation; synthetic examples only.
+title: "[Feedback] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This is optional feedback for an experimental alpha, not a security audit.
+        Try the synthetic demo: https://shkyyy18.github.io/workflow-permission-map/
+        In the default example, click publish / contents and inspect the declaration source.
+        A short observation is enough; "not useful" and "existing tools are sufficient" are welcome.
+        GitHub issues are PUBLIC. Do not include real workflows, reports, screenshots, credentials,
+        employer or repository identifiers, personal background, or contact details.
+        This template was prepared with AI assistance. No account details or star are requested here.
+        GitHub itself requires an account to submit an issue; the demo does not.
+        Do not use this form to report a private security vulnerability.
+  - type: dropdown
+    id: stage
+    attributes:
+      label: What did you try?
+      options:
+        - I have not tried the demo yet
+        - The default synthetic example
+        - The tutorial before-and-after example
+        - My own newly written synthetic example
+    validations:
+      required: true
+  - type: textarea
+    id: observation
+    attributes:
+      label: One observation
+      description: Which step or cell was clear, confusing, or not useful? Describe expected vs observed behavior if relevant.
+      placeholder: Describe only what you actually observed. You do not need to provide YAML.
+    validations:
+      required: true
+  - type: textarea
+    id: existing-tools
+    attributes:
+      label: Are your existing tools sufficient? (optional)
+      description: Does the source-line explanation add anything to your review? No tool or employer names are needed.
+    validations:
+      required: false
+  - type: textarea
+    id: synthetic-example
+    attributes:
+      label: Minimal synthetic YAML (optional)
+      description: Write a NEW generic example from scratch. Do not paste or rename a real workflow. Omit step scripts and identifiers.
+      render: yaml
+    validations:
+      required: false
+  - type: checkboxes
+    id: public-scope
+    attributes:
+      label: Public-content check
+      options:
+        - label: I reviewed this public report and included only non-sensitive observations and, if present, a newly written synthetic example.
+          required: true
